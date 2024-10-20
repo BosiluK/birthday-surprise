@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Birthday Message</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://graphicriver.img.customer.envatousercontent.com/files/130504924/Balloons%20on%20blue%20background%20with%20banner1.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=4068&max-w=300&s=ab84ff74e6851b23c886575c1672afe0'); /* Replace with your artistic image URL */
+            background-size: cover;
+            background-position: center;
+            position: relative; /* Allow absolute positioning of elements */
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .message {
+            font-size: 3em;
+            color: #fff; /* White text color for contrast */
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
+        }
+
+        .visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Confetti styles */
+        .confetti {
+            position: absolute;
+            width: 15px; /* Increased size */
+            height: 15px; /* Increased size */
+            opacity: 0;
+            animation: fall 1s forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* Starburst styles */
+        .starburst {
+            position: absolute;
+            width: 0; /* Initial size */
+            height: 0; /* Initial size */
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffcc00, #ff5733);
+            opacity: 0;
+            animation: burst 1s forwards;
+        }
+
+        @keyframes burst {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 100px; /* Final size */
+                height: 100px; /* Final size */
+                opacity: 0;
+            }
+        }
+
+        /* Firecracker styles */
+        .firecracker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffcc00, #ff5733);
+            opacity: 0;
+            animation: explode 1s forwards;
+        }
+
+        @keyframes explode {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(3); }
+        }
+
+        .footer {
+            font-size: 2em; /* Increased font size */
+            color: #ffcc00; /* Yellow color for footer */
+            font-weight: bold; /* Bold text */
+            position: absolute;
+            bottom: 20px; /* Position at the bottom */
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.5s ease;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
+        }
+
+        .visible-footer {
+            opacity: 1; /* Make visible when class is added */
+        }
+    </style>
+</head>
+<body>
+    <div id="message" class="message"></div>
+    <div id="footer" class="footer">From Bosilu</div> <!-- Footer message -->
+    
+    <script>
+        const messages = [
+            "🎉 Shhh... It’s a Secret! 🎉",
+            "Get Ready for a Surprise!",
+            "🎂 Happy Birthday, Rusandu! 🎂", // Replace 'YourName' with the person's name
+            "Today is all about you! ✨",
+            "Another year, another adventure awaits! 🌍",
+            "May your day be filled with laughter and joy! 🎈",
+            "Let’s make memories that will last a lifetime! 📸",
+            "You deserve all the happiness in the world! 🌟",
+            "Surround yourself with love and joy today! 💖",
+            "Let’s Celebrate! 🎊",
+            "Surprise! 🎁 Enjoy your special day!",
+            "Here’s to a year full of success and happiness! 🥳",
+            "Cheers to you and all that you do! 🥂",
+            "Embrace the journey and make a wish! 🌠",
+            "Happy Birthday again! 🎈",
+            "Have a blast on your special day! 🎊" // Last sentence updated
+        ];
+
+        let index = 0;
+        const messageElement = document.getElementById('message');
+        const footerElement = document.getElementById('footer');
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+            confetti.style.backgroundColor = getRandomColor(); // Random color
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove(); // Remove confetti after animation
+            }, 1000); // Match this with the fall animation duration
+        }
+
+        function createStarburst() {
+            const starburst = document.createElement('div');
+            starburst.className = 'starburst';
+            starburst.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+            starburst.style.bottom = Math.random() * 50 + 'vh'; // Random vertical position
+            document.body.appendChild(starburst);
+
+            setTimeout(() => {
+                starburst.remove(); // Remove starburst after animation
+            }, 1000); // Match this with the burst animation duration
+        }
+
+        function createFirecracker() {
+            const firecracker = document.createElement('div');
+            firecracker.className = 'firecracker';
+            firecracker.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+            firecracker.style.bottom = '10vh'; // Position near the bottom
+            document.body.appendChild(firecracker);
+
+            setTimeout(() => {
+                firecracker.remove(); // Remove firecracker after animation
+            }, 1000); // Match this with the explode animation duration
+        }
+
+        function getRandomColor() {
+            const colors = ['#ffcc00', '#ff5733', '#33ccff', '#ff33a6', '#66ff33', '#ff9933'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function showMessage() {
+            if (index < messages.length) {
+                messageElement.innerText = messages[index];
+                messageElement.classList.add('visible');
+
+                createConfetti(); // Show confetti for every message
+                createStarburst(); // Show starburst for every message
+                
+                setTimeout(() => {
+                    messageElement.classList.remove('visible');
+                    index++;
+                    setTimeout(showMessage, 500); // Pause before showing the next message
+                }, 3000); // Display each message for 3 seconds
+            } else {
+                // Final Celebration Message
+                createFirecracker(); // Show firecracker before final message
+                setTimeout(() => {
+                    messageElement.innerText = "🎉 Let’s Party Like There’s No Tomorrow! 🎉";
+                    messageElement.classList.add('visible');
+                    setTimeout(() => {
+                        messageElement.classList.remove('visible');
+                        footerElement.classList.add('visible-footer'); // Show footer after messages
+                    }, 4000); // Show final message for 4 seconds
+                }, 1000); // Delay before showing final message
+            }
+        }
+
+        // Start the surprise message
+        showMessage();
+    </script>
+</body>
+</html>
